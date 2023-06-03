@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 // Routes
 const users = require('./routes/users');
+const settings = require('./routes/settings')
 
 // Server and DB connection
 const app = express();
@@ -19,8 +20,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/HouseMonitDB', { useNewUrlParser: tr
   .catch(err => console.error(err));
 
 
-// API Connection
+// API Connection to users
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/api', users);
+
+// API Connection to settings
+app.use('/api', settings);
