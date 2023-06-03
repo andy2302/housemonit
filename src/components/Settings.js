@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Settings.css';
 
+const serverIP = process.env.REACT_APP_SERVER_IP;
+console.log(`Server IP: ${serverIP}`);
+
 const Settings = () => {
     const savedAddress = JSON.parse(localStorage.getItem('selectedAddress')) || {};
     const [address, setAddress] = useState('');
@@ -10,7 +13,7 @@ const Settings = () => {
     const [allEntries, setAllEntries] = useState([]);
   
     useEffect(() => {
-      fetch('http://127.0.0.1:5000/api/settings')
+      fetch(`http://${serverIP}:5000/api/settings`)
         .then(response => response.json())
         .then(data => setAllEntries(data))
         .catch((error) => console.error('Error:', error));
@@ -29,7 +32,7 @@ const Settings = () => {
       numInhabitants: Number(numInhabitants),
     };
   
-    fetch('http://127.0.0.1:5000/api/settings', {
+    fetch(`http://${serverIP}:5000/api/settings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -45,7 +48,7 @@ const Settings = () => {
   };
 
   const handleSelect = (entry) => {
-    fetch(`http://127.0.0.1:5000/api/settings/${entry._id}`, {
+    fetch(`http://${serverIP}:5000/api/settings/${entry._id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
